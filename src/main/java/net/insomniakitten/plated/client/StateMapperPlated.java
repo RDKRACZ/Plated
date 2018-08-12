@@ -13,10 +13,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
-public final class PlatedStateMapper extends StateMapperBase {
+public final class StateMapperPlated extends StateMapperBase {
     private final ResourceLocation modelPath;
 
-    private PlatedStateMapper(final String domain, final ResourceLocation name) {
+    private StateMapperPlated(final String domain, final ResourceLocation name) {
         String namespace = name.getNamespace();
         String path = name.getPath();
         this.modelPath = new ResourceLocation(domain, namespace + "/" + path);
@@ -25,7 +25,7 @@ public final class PlatedStateMapper extends StateMapperBase {
     public static void registerFor(final Block block) {
         final ResourceLocation registryName = block.getRegistryName();
         Objects.requireNonNull(registryName, "registryName");
-        ModelLoader.setCustomStateMapper(block, new PlatedStateMapper(Plated.ID, registryName));
+        ModelLoader.setCustomStateMapper(block, new StateMapperPlated(Plated.ID, registryName));
     }
 
     @Override

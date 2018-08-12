@@ -1,6 +1,6 @@
 package net.insomniakitten.plated.compat.quark;
 
-import net.insomniakitten.plated.client.PlatedStateMapper;
+import net.insomniakitten.plated.client.StateMapperPlated;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -21,13 +21,13 @@ public final class CompatQuark {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
         final IForgeRegistry<Block> registry = event.getRegistry();
-        registry.register(new BlockObsidianPlatedPressurePlate("obsidian_pressure_plate"));
+        registry.register(new BlockPressurePlatePlatedObsidian("obsidian_pressure_plate"));
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterModels(final ModelRegistryEvent event) {
-        PlatedStateMapper.registerFor(CompatQuark.OBSIDIAN_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(CompatQuark.OBSIDIAN_PRESSURE_PLATE);
     }
 
 }

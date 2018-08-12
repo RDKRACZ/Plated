@@ -9,21 +9,22 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
-public final class PlatedModelResource extends ModelResourceLocation {
-    private PlatedModelResource(final ResourceLocation name, final String variant) {
+public final class ModelResourcePlated extends ModelResourceLocation {
+    private ModelResourcePlated(final ResourceLocation name, final String variant) {
         super(new ResourceLocation(Plated.ID, name.getNamespace() + "/" + name.getPath()), variant);
     }
 
     public static void registerFor(final Item item, final String variant) {
-        final ResourceLocation registryName = item.getRegistryName();
+        @Nullable final ResourceLocation registryName = item.getRegistryName();
         Objects.requireNonNull(registryName, "registryName");
-        ModelLoader.setCustomModelResourceLocation(item, 0, new PlatedModelResource(registryName, variant));
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourcePlated(registryName, variant));
     }
 
     public static void registerFor(final Block block,  final String variant) {
-        PlatedModelResource.registerFor(Item.getItemFromBlock(block), variant);
+        ModelResourcePlated.registerFor(Item.getItemFromBlock(block), variant);
     }
 }

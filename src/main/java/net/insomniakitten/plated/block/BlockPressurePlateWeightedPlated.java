@@ -1,6 +1,6 @@
 package net.insomniakitten.plated.block;
 
-import net.insomniakitten.plated.util.PlatedBlockEntity;
+import net.insomniakitten.plated.util.BlockEntityPlated;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPressurePlateWeighted;
 import net.minecraft.block.SoundType;
@@ -20,19 +20,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.Optional;
-
-public class BlockPlatedPressurePlateWeighted extends BlockPressurePlateWeighted implements IPlatedPressurePlate {
+public class BlockPressurePlateWeightedPlated extends BlockPressurePlateWeighted implements IPlatedPressurePlate {
 
     private final int maxWeight;
 
-    public BlockPlatedPressurePlateWeighted(final Material material, final SoundType soundType, final int maxWeight, final MapColor color) {
+    public BlockPressurePlateWeightedPlated(final Material material, final SoundType soundType, final int maxWeight, final MapColor color) {
         super(material, maxWeight, color);
         this.maxWeight = maxWeight;
         this.setSoundType(soundType);
     }
 
-    public BlockPlatedPressurePlateWeighted(final Material material, final SoundType soundType, final int maxWeight) {
+    public BlockPressurePlateWeightedPlated(final Material material, final SoundType soundType, final int maxWeight) {
         this(material, soundType, maxWeight, material.getMaterialMapColor());
     }
 
@@ -94,8 +92,8 @@ public class BlockPlatedPressurePlateWeighted extends BlockPressurePlateWeighted
     @Deprecated
     public IBlockState getActualState(final IBlockState state, final IBlockAccess access, final BlockPos pos) {
         final TileEntity tileEntity = access.getTileEntity(pos);
-        if (tileEntity instanceof PlatedBlockEntity) {
-            final EnumFacing facing = ((PlatedBlockEntity) tileEntity).getFacing();
+        if (tileEntity instanceof BlockEntityPlated) {
+            final EnumFacing facing = ((BlockEntityPlated) tileEntity).getFacing();
             return state.withProperty(IPlatedPressurePlate.PROPERTY_FACING, facing);
         }
         return state;
@@ -113,7 +111,7 @@ public class BlockPlatedPressurePlateWeighted extends BlockPressurePlateWeighted
 
     @Override
     public TileEntity createTileEntity(final World world, final IBlockState state) {
-        return new PlatedBlockEntity(state.getValue(IPlatedPressurePlate.PROPERTY_FACING));
+        return new BlockEntityPlated(state.getValue(IPlatedPressurePlate.PROPERTY_FACING));
     }
 
     @Override

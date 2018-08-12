@@ -18,10 +18,10 @@ import net.minecraft.world.World;
 
 import java.util.Collection;
 
-public class BlockPlatedPressurePlate extends BlockPressurePlate implements IPlatedPressurePlate {
+public class BlockPressurePlatePlated extends BlockPressurePlate implements IPlatedPressurePlate {
     private final Sensitivity sensitivity;
 
-    public BlockPlatedPressurePlate(final Material material, final SoundType soundType, final Sensitivity sensitivity) {
+    public BlockPressurePlatePlated(final Material material, final SoundType soundType, final Sensitivity sensitivity) {
         super(material, sensitivity);
         this.sensitivity = sensitivity;
         this.setSoundType(soundType);

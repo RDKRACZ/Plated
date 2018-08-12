@@ -1,6 +1,6 @@
 package net.insomniakitten.plated.compat.quark;
 
-import net.insomniakitten.plated.block.BlockPlatedPressurePlate;
+import net.insomniakitten.plated.block.BlockPressurePlatePlated;
 import net.insomniakitten.plated.util.RegistryHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 import java.util.Collection;
 
-public final class BlockObsidianPlatedPressurePlate extends BlockPlatedPressurePlate {
-    BlockObsidianPlatedPressurePlate(final String name) {
+public final class BlockPressurePlatePlatedObsidian extends BlockPressurePlatePlated {
+    BlockPressurePlatePlatedObsidian(final String name) {
         super(Material.ROCK, SoundType.STONE, Sensitivity.MOBS);
         RegistryHelper.setRegistryName("quark", this, name);
         this.setTranslationKey(name);

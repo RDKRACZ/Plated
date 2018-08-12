@@ -22,23 +22,23 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @EventBusSubscriber(modid = Plated.ID)
-public final class PlatedBlockEntity extends TileEntity {
+public final class BlockEntityPlated extends TileEntity {
     private static final String KEY_FACING_INDEX = "facing_index";
 
     @Nullable
     private EnumFacing facing;
 
     @SuppressWarnings("unused")
-    public PlatedBlockEntity() {}
+    public BlockEntityPlated() {}
 
-    public PlatedBlockEntity(@Nullable final EnumFacing facing) {
+    public BlockEntityPlated(@Nullable final EnumFacing facing) {
         this.facing = facing;
     }
 
     @SubscribeEvent
     public static void onRegister(final RegistryEvent.Register<Block> event) {
         final ResourceLocation key = new ResourceLocation(Plated.ID, "facing_data");
-        GameRegistry.registerTileEntity(PlatedBlockEntity.class, key);
+        GameRegistry.registerTileEntity(BlockEntityPlated.class, key);
     }
 
     public EnumFacing getFacing() {
@@ -48,8 +48,8 @@ public final class PlatedBlockEntity extends TileEntity {
     @Override
     public void readFromNBT(final NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey(PlatedBlockEntity.KEY_FACING_INDEX, Constants.NBT.TAG_INT)) {
-            final int index = compound.getInteger(PlatedBlockEntity.KEY_FACING_INDEX);
+        if (compound.hasKey(BlockEntityPlated.KEY_FACING_INDEX, Constants.NBT.TAG_INT)) {
+            final int index = compound.getInteger(BlockEntityPlated.KEY_FACING_INDEX);
             this.facing = EnumFacing.byIndex(index);
         }
     }
@@ -59,7 +59,7 @@ public final class PlatedBlockEntity extends TileEntity {
         super.writeToNBT(compound);
         if (this.facing != null) {
             final int index = this.facing.getIndex();
-            compound.setInteger(PlatedBlockEntity.KEY_FACING_INDEX, index);
+            compound.setInteger(BlockEntityPlated.KEY_FACING_INDEX, index);
         }
         return compound;
     }

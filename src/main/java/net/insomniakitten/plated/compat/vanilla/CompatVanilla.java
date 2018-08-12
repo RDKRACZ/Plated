@@ -1,6 +1,6 @@
 package net.insomniakitten.plated.compat.vanilla;
 
-import net.insomniakitten.plated.client.PlatedStateMapper;
+import net.insomniakitten.plated.client.StateMapperPlated;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPressurePlate.Sensitivity;
 import net.minecraft.block.SoundType;
@@ -20,19 +20,19 @@ public final class CompatVanilla {
     @SubscribeEvent
     public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
         final IForgeRegistry<Block> registry = event.getRegistry();
-        registry.register(new BlockVanillaPlatedPressurePlate("stone_pressure_plate", "pressurePlateStone", Material.ROCK, SoundType.STONE, Sensitivity.MOBS));
-        registry.register(new BlockVanillaPlatedPressurePlate("wooden_pressure_plate", "pressurePlateWood", Material.WOOD, SoundType.WOOD, Sensitivity.EVERYTHING));
-        registry.register(new BlockWeightedVanillaPlatedPressurePlate("light_weighted_pressure_plate", "weightedPlate_light", Material.IRON, SoundType.WOOD, 15, MapColor.GOLD));
-        registry.register(new BlockWeightedVanillaPlatedPressurePlate("heavy_weighted_pressure_plate", "weightedPlate_heavy", Material.IRON, SoundType.WOOD, 150, MapColor.IRON));
+        registry.register(new BlockPressurePlatePlatedVanilla("stone_pressure_plate", "pressurePlateStone", Material.ROCK, SoundType.STONE, Sensitivity.MOBS));
+        registry.register(new BlockPressurePlatePlatedVanilla("wooden_pressure_plate", "pressurePlateWood", Material.WOOD, SoundType.WOOD, Sensitivity.EVERYTHING));
+        registry.register(new BlockPressurePlateWeightedPlatedVanilla("light_weighted_pressure_plate", "weightedPlate_light", Material.IRON, SoundType.WOOD, 15, MapColor.GOLD));
+        registry.register(new BlockPressurePlateWeightedPlatedVanilla("heavy_weighted_pressure_plate", "weightedPlate_heavy", Material.IRON, SoundType.WOOD, 150, MapColor.IRON));
     }
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
-        PlatedStateMapper.registerFor(Blocks.STONE_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(Blocks.WOODEN_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(Blocks.STONE_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(Blocks.WOODEN_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
     }
 
 }

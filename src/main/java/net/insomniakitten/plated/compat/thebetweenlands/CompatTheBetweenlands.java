@@ -1,7 +1,7 @@
 package net.insomniakitten.plated.compat.thebetweenlands;
 
-import net.insomniakitten.plated.client.PlatedModelResource;
-import net.insomniakitten.plated.client.PlatedStateMapper;
+import net.insomniakitten.plated.client.ModelResourcePlated;
+import net.insomniakitten.plated.client.StateMapperPlated;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -28,20 +28,20 @@ public final class CompatTheBetweenlands {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
         final IForgeRegistry<Block> registry = event.getRegistry();
-        registry.register(new BlockBetweenlandsPlatedPressurePlate("weedwood_plank_pressure_plate", Material.WOOD, SoundType.WOOD, null));
-        registry.register(new BlockBetweenlandsPlatedPressurePlate("betweenstone_pressure_plate", Material.ROCK, SoundType.STONE, EntityLivingBase.class));
-        registry.register(new BlockBetweenlandsPlatedPressurePlate("syrmorite_pressure_plate", Material.IRON, SoundType.METAL, EntityPlayer.class));
+        registry.register(new BlockPressurePlatePlatedBetweenlands("weedwood_plank_pressure_plate", Material.WOOD, SoundType.WOOD, null));
+        registry.register(new BlockPressurePlatePlatedBetweenlands("betweenstone_pressure_plate", Material.ROCK, SoundType.STONE, EntityLivingBase.class));
+        registry.register(new BlockPressurePlatePlatedBetweenlands("syrmorite_pressure_plate", Material.IRON, SoundType.METAL, EntityPlayer.class));
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterModels(final ModelRegistryEvent event) {
-        PlatedStateMapper.registerFor(CompatTheBetweenlands.WEEDWOOD_PLANK_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(CompatTheBetweenlands.BETWEENSTONE_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(CompatTheBetweenlands.SYRMORITE_PRESSURE_PLATE);
-        PlatedModelResource.registerFor(CompatTheBetweenlands.WEEDWOOD_PLANK_PRESSURE_PLATE, "facing=down,powered=false");
-        PlatedModelResource.registerFor(CompatTheBetweenlands.BETWEENSTONE_PRESSURE_PLATE, "facing=down,powered=false");
-        PlatedModelResource.registerFor(CompatTheBetweenlands.SYRMORITE_PRESSURE_PLATE, "facing=down,powered=false");
+        StateMapperPlated.registerFor(CompatTheBetweenlands.WEEDWOOD_PLANK_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(CompatTheBetweenlands.BETWEENSTONE_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(CompatTheBetweenlands.SYRMORITE_PRESSURE_PLATE);
+        ModelResourcePlated.registerFor(CompatTheBetweenlands.WEEDWOOD_PLANK_PRESSURE_PLATE, "facing=down,powered=false");
+        ModelResourcePlated.registerFor(CompatTheBetweenlands.BETWEENSTONE_PRESSURE_PLATE, "facing=down,powered=false");
+        ModelResourcePlated.registerFor(CompatTheBetweenlands.SYRMORITE_PRESSURE_PLATE, "facing=down,powered=false");
     }
 
 }

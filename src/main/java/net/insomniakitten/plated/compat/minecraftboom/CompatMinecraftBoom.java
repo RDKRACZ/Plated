@@ -1,7 +1,7 @@
 package net.insomniakitten.plated.compat.minecraftboom;
 
-import net.insomniakitten.plated.client.PlatedModelResource;
-import net.insomniakitten.plated.client.PlatedStateMapper;
+import net.insomniakitten.plated.client.ModelResourcePlated;
+import net.insomniakitten.plated.client.StateMapperPlated;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -26,25 +26,25 @@ public final class CompatMinecraftBoom {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
         final IForgeRegistry<Block> registry = event.getRegistry();
-        registry.register(new BlockWoodenPlatedPressurePlate("spruce_pressure_plate"));
-        registry.register(new BlockWoodenPlatedPressurePlate("birch_pressure_plate"));
-        registry.register(new BlockWoodenPlatedPressurePlate("jungle_pressure_plate"));
-        registry.register(new BlockWoodenPlatedPressurePlate("acacia_pressure_plate"));
-        registry.register(new BlockWoodenPlatedPressurePlate("dark_oak_pressure_plate"));
+        registry.register(new BlockPressurePlatePlatedWooden("spruce_pressure_plate"));
+        registry.register(new BlockPressurePlatePlatedWooden("birch_pressure_plate"));
+        registry.register(new BlockPressurePlatePlatedWooden("jungle_pressure_plate"));
+        registry.register(new BlockPressurePlatePlatedWooden("acacia_pressure_plate"));
+        registry.register(new BlockPressurePlatePlatedWooden("dark_oak_pressure_plate"));
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterModels(final ModelRegistryEvent event) {
-        PlatedStateMapper.registerFor(CompatMinecraftBoom.SPRUCE_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(CompatMinecraftBoom.BIRCH_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(CompatMinecraftBoom.JUNGLE_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(CompatMinecraftBoom.ACACIA_PRESSURE_PLATE);
-        PlatedStateMapper.registerFor(CompatMinecraftBoom.DARK_OAK_PRESSURE_PLATE);
-        PlatedModelResource.registerFor(CompatMinecraftBoom.SPRUCE_PRESSURE_PLATE, "facing=down,powered=false");
-        PlatedModelResource.registerFor(CompatMinecraftBoom.BIRCH_PRESSURE_PLATE, "facing=down,powered=false");
-        PlatedModelResource.registerFor(CompatMinecraftBoom.JUNGLE_PRESSURE_PLATE, "facing=down,powered=false");
-        PlatedModelResource.registerFor(CompatMinecraftBoom.ACACIA_PRESSURE_PLATE, "facing=down,powered=false");
-        PlatedModelResource.registerFor(CompatMinecraftBoom.DARK_OAK_PRESSURE_PLATE, "facing=down,powered=false");
+        StateMapperPlated.registerFor(CompatMinecraftBoom.SPRUCE_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(CompatMinecraftBoom.BIRCH_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(CompatMinecraftBoom.JUNGLE_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(CompatMinecraftBoom.ACACIA_PRESSURE_PLATE);
+        StateMapperPlated.registerFor(CompatMinecraftBoom.DARK_OAK_PRESSURE_PLATE);
+        ModelResourcePlated.registerFor(CompatMinecraftBoom.SPRUCE_PRESSURE_PLATE, "facing=down,powered=false");
+        ModelResourcePlated.registerFor(CompatMinecraftBoom.BIRCH_PRESSURE_PLATE, "facing=down,powered=false");
+        ModelResourcePlated.registerFor(CompatMinecraftBoom.JUNGLE_PRESSURE_PLATE, "facing=down,powered=false");
+        ModelResourcePlated.registerFor(CompatMinecraftBoom.ACACIA_PRESSURE_PLATE, "facing=down,powered=false");
+        ModelResourcePlated.registerFor(CompatMinecraftBoom.DARK_OAK_PRESSURE_PLATE, "facing=down,powered=false");
     }
 }

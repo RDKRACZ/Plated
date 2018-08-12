@@ -1,6 +1,6 @@
 package net.insomniakitten.plated.compat.thebetweenlands;
 
-import net.insomniakitten.plated.block.BlockPlatedPressurePlate;
+import net.insomniakitten.plated.block.BlockPressurePlatePlated;
 import net.insomniakitten.plated.util.RegistryHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,10 +12,10 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
-public final class BlockBetweenlandsPlatedPressurePlate extends BlockPlatedPressurePlate {
+public final class BlockPressurePlatePlatedBetweenlands extends BlockPressurePlatePlated {
     private final Class<? extends Entity> entityClazz;
 
-    BlockBetweenlandsPlatedPressurePlate(final String name, final Material material, final SoundType soundType, @Nullable final Class<? extends Entity> entityClazz) {
+    BlockPressurePlatePlatedBetweenlands(final String name, final Material material, final SoundType soundType, @Nullable final Class<? extends Entity> entityClazz) {
         super(material, soundType, Sensitivity.MOBS);
         this.entityClazz = entityClazz;
         RegistryHelper.setRegistryName("thebetweenlands", this, name);
