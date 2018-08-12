@@ -1,0 +1,42 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript {
+  repositories {
+    jcenter()
+    maven { url = 'https://files.minecraftforge.net/maven' }
+  }
+  dependencies {
+    classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+  }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = '0.1.0'
+group = 'net.insomniakitten.plated'
+archivesBaseName = 'Plated'
+sourceCompatibility = 1.8
+
+minecraft {
+  version = '1.12.2-14.23.4.2749'
+  mappings = 'snapshot_20180812'
+  runDir = 'run'
+}
+
+repositories {
+  maven { url = 'http://tehnut.info/maven' }
+  maven { url = 'http://dvs1.progwml6.com/files/maven' }
+}
+
+dependencies {
+  runtime 'mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2'
+  runtime 'mezz.jei:jei_1.12.2:4.11.0.206'
+}
+
+jar {
+  manifest { attributes 'FMLAT': 'plated_at.cfg' }
+}
+
+processResources {
+  filter ReplaceTokens, tokens: ['mod.version': project.version]
+}
