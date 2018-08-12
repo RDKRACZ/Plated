@@ -1,12 +1,8 @@
-package net.insomniakitten.plated.compat;
+package net.insomniakitten.plated.compat.minecraftboom;
 
-import net.insomniakitten.plated.block.BlockPlatedPressurePlate;
 import net.insomniakitten.plated.client.PlatedModelResource;
 import net.insomniakitten.plated.client.PlatedStateMapper;
-import net.insomniakitten.plated.util.RegistryHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -30,11 +26,11 @@ public final class CompatMinecraftBoom {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
         final IForgeRegistry<Block> registry = event.getRegistry();
-        registry.register(new BlockDirectionalWoodenPlate("spruce_pressure_plate"));
-        registry.register(new BlockDirectionalWoodenPlate("birch_pressure_plate"));
-        registry.register(new BlockDirectionalWoodenPlate("jungle_pressure_plate"));
-        registry.register(new BlockDirectionalWoodenPlate("acacia_pressure_plate"));
-        registry.register(new BlockDirectionalWoodenPlate("dark_oak_pressure_plate"));
+        registry.register(new BlockWoodenPlatedPressurePlate("spruce_pressure_plate"));
+        registry.register(new BlockWoodenPlatedPressurePlate("birch_pressure_plate"));
+        registry.register(new BlockWoodenPlatedPressurePlate("jungle_pressure_plate"));
+        registry.register(new BlockWoodenPlatedPressurePlate("acacia_pressure_plate"));
+        registry.register(new BlockWoodenPlatedPressurePlate("dark_oak_pressure_plate"));
     }
 
     @SideOnly(Side.CLIENT)
@@ -50,15 +46,5 @@ public final class CompatMinecraftBoom {
         PlatedModelResource.registerFor(CompatMinecraftBoom.JUNGLE_PRESSURE_PLATE, "facing=down,powered=false");
         PlatedModelResource.registerFor(CompatMinecraftBoom.ACACIA_PRESSURE_PLATE, "facing=down,powered=false");
         PlatedModelResource.registerFor(CompatMinecraftBoom.DARK_OAK_PRESSURE_PLATE, "facing=down,powered=false");
-    }
-
-    private static final class BlockDirectionalWoodenPlate extends BlockPlatedPressurePlate {
-        private BlockDirectionalWoodenPlate(final String name) {
-            super(Material.WOOD, SoundType.WOOD, Sensitivity.EVERYTHING);
-            RegistryHelper.setRegistryName("minecraftboom", this, name);
-            RegistryHelper.findCreativeTab("minecraftboom_tab").ifPresent(this::setCreativeTab);
-            this.setTranslationKey("minecraftboom." + name);
-            this.setHardness(0.5F);
-        }
     }
 }

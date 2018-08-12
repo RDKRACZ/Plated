@@ -1,6 +1,6 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-package net.insomniakitten.plated.compat;
+package net.insomniakitten.plated.compat.minecraftboom;
 
 import mcp.MethodsReturnNonnullByDefault;
 

@@ -1,9 +1,9 @@
 package net.insomniakitten.plated;
 
-import net.insomniakitten.plated.compat.CompatMinecraftBoom;
-import net.insomniakitten.plated.compat.CompatQuark;
-import net.insomniakitten.plated.compat.CompatTheBetweenlands;
-import net.insomniakitten.plated.compat.CompatVanilla;
+import net.insomniakitten.plated.compat.minecraftboom.CompatMinecraftBoom;
+import net.insomniakitten.plated.compat.quark.CompatQuark;
+import net.insomniakitten.plated.compat.thebetweenlands.CompatTheBetweenlands;
+import net.insomniakitten.plated.compat.vanilla.CompatVanilla;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
