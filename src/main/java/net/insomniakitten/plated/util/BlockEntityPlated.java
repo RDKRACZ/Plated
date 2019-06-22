@@ -2,14 +2,17 @@ package net.insomniakitten.plated.util;
 
 import net.insomniakitten.plated.Plated;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -92,5 +95,10 @@ public final class BlockEntityPlated extends TileEntity {
     @Override
     public void handleUpdateTag(final NBTTagCompound compound) {
         this.readFromNBT(compound);
+    }
+
+    @Override
+    public boolean shouldRefresh(final World world, final BlockPos pos, final IBlockState oldState, final IBlockState newState) {
+        return oldState.getBlock() != newState.getBlock();
     }
 }
