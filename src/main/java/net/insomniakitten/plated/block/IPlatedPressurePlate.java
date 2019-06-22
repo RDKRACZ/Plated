@@ -24,8 +24,12 @@ public interface IPlatedPressurePlate {
 
     boolean isPowered(final IBlockState state);
 
+    default IProperty<EnumFacing> getFacingProperty() {
+        return IPlatedPressurePlate.PROPERTY_FACING;
+    }
+
     default EnumFacing getFacing(final IBlockState state, final IBlockAccess world, final BlockPos pos) {
-        return state.getActualState(world, pos).getValue(IPlatedPressurePlate.PROPERTY_FACING);
+        return state.getActualState(world, pos).getValue(this.getFacingProperty());
     }
 
     default AxisAlignedBB getPlateBoundingBox(final IBlockState state, final IBlockAccess world, final BlockPos pos) {
@@ -73,7 +77,7 @@ public interface IPlatedPressurePlate {
         final EnumFacing original = facing;
         do {
             facing = rotation.rotate(facing);
-            state = state.withProperty(IPlatedPressurePlate.PROPERTY_FACING, facing);
+            state = state.withProperty(this.getFacingProperty(), facing);
         } while (original != facing && !this.canPlaceOnSide(world, pos, facing.getOpposite()));
         return this.canPlaceOnSide(world, pos, facing.getOpposite()) && world.setBlockState(pos, state);
     }

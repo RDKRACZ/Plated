@@ -75,7 +75,7 @@ public class BlockPressurePlatePlated extends BlockPressurePlate implements IPla
     @Override
     @Deprecated
     public int getStrongPower(final IBlockState state, final IBlockAccess access, final BlockPos pos, final EnumFacing face) {
-        if (face == state.getValue(IPlatedPressurePlate.PROPERTY_FACING).getOpposite()) {
+        if (face == this.getFacing(state, access, pos).getOpposite()) {
             return this.getRedstoneStrength(state);
         }
         return 0;
@@ -94,7 +94,7 @@ public class BlockPressurePlatePlated extends BlockPressurePlate implements IPla
 
     @Override
     public IBlockState getStateForPlacement(final World world, final BlockPos pos, final EnumFacing face, final float hitX, final float hitY, final float hitZ, final int meta, final EntityLivingBase placer, final EnumHand hand) {
-        return this.getDefaultState().withProperty(IPlatedPressurePlate.PROPERTY_FACING, face.getOpposite());
+        return this.getDefaultState().withProperty(this.getFacingProperty(), face.getOpposite());
     }
 
     @Override
@@ -130,19 +130,19 @@ public class BlockPressurePlatePlated extends BlockPressurePlate implements IPla
         final EnumFacing facing = EnumFacing.byIndex(meta >> 1);
         final boolean powered = (meta & 1) == 1;
         return this.getDefaultState()
-            .withProperty(IPlatedPressurePlate.PROPERTY_FACING, facing)
+            .withProperty(this.getFacingProperty(), facing)
             .withProperty(BlockPressurePlate.POWERED, powered);
     }
 
     @Override
     public int getMetaFromState(final IBlockState state) {
-        final int facing = state.getValue(IPlatedPressurePlate.PROPERTY_FACING).getIndex() << 1;
+        final int facing = state.getValue(this.getFacingProperty()).getIndex() << 1;
         final int powered = state.getValue(BlockPressurePlate.POWERED) ? 1 : 0;
         return facing | powered;
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, IPlatedPressurePlate.PROPERTY_FACING, BlockPressurePlate.POWERED);
+        return new BlockStateContainer(this, this.getFacingProperty(), BlockPressurePlate.POWERED);
     }
 }

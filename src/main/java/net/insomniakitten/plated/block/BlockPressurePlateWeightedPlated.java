@@ -57,7 +57,7 @@ public class BlockPressurePlateWeightedPlated extends BlockPressurePlateWeighted
         final boolean isPowered = redstoneStrength > 0;
         if (oldRedstoneStrength != redstoneStrength) {
             final IBlockState newState = this.setRedstoneStrength(state, redstoneStrength);
-            world.setBlockState(pos, newState, 2);
+            world.setBlockState(pos, newState, 0b10);
             this.notifyNeighbors(newState, world, pos);
             world.markBlockRangeForRenderUpdate(pos, pos);
         }

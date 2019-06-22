@@ -1,6 +1,7 @@
 package net.insomniakitten.plated;
 
 import net.insomniakitten.plated.compat.minecraftboom.CompatMinecraftBoom;
+import net.insomniakitten.plated.compat.moeswitches.CompatMoeSwitches;
 import net.insomniakitten.plated.compat.quark.CompatQuark;
 import net.insomniakitten.plated.compat.thebetweenlands.CompatTheBetweenlands;
 import net.insomniakitten.plated.compat.vanilla.CompatVanilla;
@@ -27,6 +28,9 @@ public final class Plated {
         MinecraftForge.EVENT_BUS.register(CompatVanilla.class);
         if (Loader.isModLoaded("minecraftboom")) {
             MinecraftForge.EVENT_BUS.register(CompatMinecraftBoom.class);
+        }
+        if (Loader.isModLoaded("moeswitches")) {
+            MinecraftForge.EVENT_BUS.register(CompatMoeSwitches.class);
         }
         if (Loader.isModLoaded("quark")) {
             MinecraftForge.EVENT_BUS.register(CompatQuark.class);
