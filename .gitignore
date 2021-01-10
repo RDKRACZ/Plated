@@ -1,36 +1,29 @@
-# game
-/run
-
-# assets
-/docs
-/icons
-/models
-/sounds
-/sprites
-
-# gradle
-/.gradle
-/build
-
-# eclipse
-/*.bak
-/*.launch
-/*.swp
-/*.tmp
-/*~.nib
-/.loadpath
-/.metadata
-/.recommenders
-/.settings
-/bin
-/local.properties
-/tmp
-
-/# idea
-/*.iml
-/*.ipr
-/.idea
-/out
-
-# vscode
-/.vscode
+*.bak
+*.code-workspace
+*.iml
+*.ipr
+*.iws
+*.launch
+*.swp
+*.tmp
+*~
+*~.nib
+.DS_Store
+._*
+.classpath/
+.directory
+.fuse_hidden*
+.gradle/
+.idea/
+.metadata/
+.project/
+.settings/
+.vscode/*
+Thumbs.db
+Thumbs.db:encryptable
+bin/
+build/
+eclipse/
+out/
+run/
+tmp/

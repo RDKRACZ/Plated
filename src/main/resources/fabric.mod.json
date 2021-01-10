@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "plated",
+  "name": "Plated",
+  "version": "$version",
+  "description": "Allows placement of pressure plates on any solid face of a block",
+  "license": "Apache-2.0",
+  "icon": "pack.png",
+  "depends": {
+    "minecraft": ">=1.16.4",
+    "fabricloader": ">=0.10.8"
+  },
+  "mixins": [
+    "mixins/plated/mixins.client.json",
+    "mixins/plated/mixins.server.json"
+  ],
+  "authors": [
+    "Chloe Dawn"
+  ],
+  "contact": {
+    "homepage": "https://git.io/JLPmd",
+    "sources": "https://git.io/JLPmd",
+    "issues": "https://git.io/JLPm5"
+  }
+}

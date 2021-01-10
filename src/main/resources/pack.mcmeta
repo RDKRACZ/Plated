@@ -1,6 +1,6 @@
 {
   "pack": {
-    "pack_format": 3,
-    "description": "@mod.version@"
+    "pack_format": 6,
+    "description": "The default data for Plated"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "required": true,
+  "package": "dev.sapphic.plated.client.mixin",
+  "client": [
+    "ModelBakeryMixin"
+  ],
+  "refmap": "mixins/plated/refmap.json"
+}
