@@ -52,26 +52,27 @@ tasks {
       "Sealed" to "true"
     )
   }
+}
 
-  if (project.hasProperty("signing.mods.keyalias")) {
-    listOf(remapJar, remapSourcesJar).forEach {
-      it.get().doLast {
-        val file = outputs.files.singleFile
-        val alias = project.property("signing.mods.keyalias")
-        val keystore = project.property("signing.mods.keystore")
-        val password = project.property("signing.mods.password")
-        ant.invokeMethod(
-          "signjar", mapOf(
-            "jar" to file,
-            "alias" to alias,
-            "storepass" to password,
-            "keystore" to keystore,
-            "verbose" to true,
-            "preservelastmodified" to true
-          )
+if (project.hasProperty("signing.mods.keyalias")) {
+  val alias = project.property("signing.mods.keyalias")
+  val keystore = project.property("signing.mods.keystore")
+  val password = project.property("signing.mods.password")
+
+  listOf(tasks.remapJar, tasks.remapSourcesJar).forEach {
+    it.get().doLast {
+      val file = outputs.files.singleFile
+      ant.invokeMethod(
+        "signjar", mapOf(
+          "jar" to file,
+          "alias" to alias,
+          "storepass" to password,
+          "keystore" to keystore,
+          "verbose" to true,
+          "preservelastmodified" to true
         )
-        signing.sign(file)
-      }
+      )
+      signing.sign(file)
     }
   }
 }
