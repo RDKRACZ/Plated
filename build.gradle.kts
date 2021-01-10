@@ -26,7 +26,7 @@ dependencies {
 tasks {
   compileJava {
     with(options) {
-      options.release.set(8)
+      release.set(8)
       isFork = true
       isDeprecation = true
       encoding = "UTF-8"
@@ -54,10 +54,10 @@ tasks {
   }
 }
 
-if (project.hasProperty("signing.mods.keyalias")) {
-  val alias = project.property("signing.mods.keyalias")
-  val keystore = project.property("signing.mods.keystore")
-  val password = project.property("signing.mods.password")
+if (hasProperty("signing.mods.keyalias")) {
+  val alias = property("signing.mods.keyalias")
+  val keystore = property("signing.mods.keystore")
+  val password = property("signing.mods.password")
 
   listOf(tasks.remapJar, tasks.remapSourcesJar).forEach {
     it.get().doLast {
