@@ -30,8 +30,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * Reference constants used by pressure plate mixins
  */
 public final class PressurePlates {
+  /**
+   * The property that represents the new facing direction of pressure plates
+   */
   public static final DirectionProperty FACING = BlockStateProperties.FACING;
-  public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+
+  /**
+   * The property that represents the new waterlogging state of pressure plates
+   */
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
   /**

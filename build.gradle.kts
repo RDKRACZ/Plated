@@ -8,29 +8,17 @@ version = "1.0.0"
 
 java {
   withSourcesJar()
-  withJavadocJar()
 }
 
 minecraft {
   refmapName = "mixins/plated/refmap.json"
 }
 
-signing {
-  sign(configurations.archives.get())
-}
-
-repositories {
-  maven("https://repo.spongepowered.org/maven") {
-    content {
-      includeGroup("org.spongepowered")
-    }
-  }
-}
-
 dependencies {
   minecraft("com.mojang:minecraft:1.16.4")
   mappings(minecraft.officialMojangMappings())
   modImplementation("net.fabricmc:fabric-loader:0.10.8")
+  implementation("com.google.code.findbugs:jsr305:3.0.2")
   implementation("org.jetbrains:annotations:20.1.0")
   implementation("org.checkerframework:checker-qual:3.8.0")
 }
@@ -65,7 +53,25 @@ tasks {
     )
   }
 
-  named<Sign>("signArchives") {
-    dependsOn("remapSourcesJar")
+  if (project.hasProperty("signing.mods.keyalias")) {
+    listOf(remapJar, remapSourcesJar).forEach {
+      it.get().doLast {
+        val file = outputs.files.singleFile
+        val alias = project.property("signing.mods.keyalias")
+        val keystore = project.property("signing.mods.keystore")
+        val password = project.property("signing.mods.password")
+        ant.invokeMethod(
+          "signjar", mapOf(
+            "jar" to file,
+            "alias" to alias,
+            "storepass" to password,
+            "keystore" to keystore,
+            "verbose" to true,
+            "preservelastmodified" to true
+          )
+        )
+        signing.sign(file)
+      }
+    }
   }
 }
