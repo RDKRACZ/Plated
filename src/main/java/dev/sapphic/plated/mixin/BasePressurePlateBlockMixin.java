@@ -21,7 +21,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BasePressurePlateBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
@@ -34,7 +33,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -55,9 +53,6 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
     super(properties);
   }
 
-  @Shadow
-  public abstract boolean shadow$canSurvive(final BlockState state, final LevelReader level, final BlockPos pos);
-
   @Override
   public @Nullable BlockState getStateForPlacement(final BlockPlaceContext context) {
     final Level level = context.getLevel();
@@ -66,7 +61,7 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
     BlockState state = this.defaultBlockState().setValue(FACING, clickedFace);
 
     // Always prefer the clicked face
-    if (this.shadow$canSurvive(state, level, pos)) {
+    if (state.canSurvive(level, pos)) {
       return this.waterlogged(state, level, pos);
     }
 
@@ -77,7 +72,7 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
 
       state = state.setValue(FACING, face);
 
-      if (this.shadow$canSurvive(state, level, pos)) {
+      if (state.canSurvive(level, pos)) {
         return this.waterlogged(state, level, pos);
       }
     }
