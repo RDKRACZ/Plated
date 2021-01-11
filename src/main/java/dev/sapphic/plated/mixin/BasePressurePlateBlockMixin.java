@@ -183,9 +183,19 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
     return state.setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
   }
 
+  /**
+   * We are redirecting the calls rather than injecting into the target as when the block is removed,
+   * the state will not be equal to {@code level.getBlockState(pos)} and therefore we need to capture
+   * the original state at the call sites. This implementation is fairly inefficient as the first
+   * call updates the below position and the second call updates the origin position, but this is how
+   * it is implemented in the original method and we want to respect existing semantics
+   *
+   * @param state The block state
+   * @param level The level to update neighbors in
+   * @param pos   The origin position
+   */
   @Unique
   private void updateNeighbors(final BlockState state, final Level level, final BlockPos pos) {
-    // This is inefficient but so is the default implementation - we just change the relative offset
     level.updateNeighborsAt(pos, this);
     level.updateNeighborsAt(pos.relative(state.getValue(FACING).getOpposite()), this);
   }
