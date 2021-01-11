@@ -1,5 +1,9 @@
+import org.gradle.util.GradleVersion
+import java.time.Instant
+
 plugins {
   id("fabric-loom") version "0.5.43"
+  id("net.nemerosa.versioning") version "2.6.1"
   id("signing")
 }
 
@@ -42,15 +46,33 @@ tasks {
 
   jar {
     from("/LICENSE.md")
+
     manifest.attributes(
-      "Specification-Title" to "MinecraftMod",
-      "Specification-Vendor" to project.group,
-      "Specification-Version" to "1.0.0",
+      "Build-Timestamp" to Instant.now(),
+      "Build-Revision" to versioning.info.commit,
+      "Build-Jvm" to "${
+        System.getProperty("java.version")
+      } (${
+        System.getProperty("java.vendor")
+      } ${
+        System.getProperty("java.vm.version")
+      })",
+      "Built-By" to GradleVersion.current(),
+
       "Implementation-Title" to project.name,
       "Implementation-Version" to project.version,
       "Implementation-Vendor" to project.group,
+
+      "Specification-Title" to "MinecraftMod",
+      "Specification-Version" to "1.1.0",
+      "Specification-Vendor" to project.group,
+
       "Sealed" to "true"
     )
+  }
+
+  assemble {
+    dependsOn(versionFile)
   }
 }
 
