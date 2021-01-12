@@ -123,28 +123,28 @@ public final class PressurePlates {
 
     final IForgeRegistry<Block> registry = event.getRegistry();
 
-    registry.register(new DirectionalPressurePlate(Material.ROCK, Sensitivity.MOBS)
+    register(registry, new DirectionalPressurePlate(Material.ROCK, Sensitivity.MOBS)
       .setSoundType(SoundType.WOOD)
       .setRegistryName(MINECRAFT, "stone_pressure_plate")
       .setTranslationKey("pressurePlateStone")
       .setCreativeTab(CreativeTabs.REDSTONE)
       .setHardness(0.5F));
 
-    registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+    register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
       .setSoundType(SoundType.WOOD)
       .setRegistryName(MINECRAFT, "wooden_pressure_plate")
       .setTranslationKey("pressurePlateWood")
       .setCreativeTab(CreativeTabs.REDSTONE)
       .setHardness(0.5F));
 
-    registry.register(new DirectionalWeightedPressurePlate(Material.WOOD, 15, MapColor.GOLD)
+    register(registry, new DirectionalWeightedPressurePlate(Material.WOOD, 15, MapColor.GOLD)
       .setSoundType(SoundType.WOOD)
       .setRegistryName(MINECRAFT, "light_weighted_pressure_plate")
       .setTranslationKey("weightedPlate_light")
       .setCreativeTab(CreativeTabs.REDSTONE)
       .setHardness(0.5F));
 
-    registry.register(new DirectionalWeightedPressurePlate(Material.WOOD, 150)
+    register(registry, new DirectionalWeightedPressurePlate(Material.WOOD, 150)
       .setSoundType(SoundType.WOOD)
       .setRegistryName(MINECRAFT, "heavy_weighted_pressure_plate")
       .setTranslationKey("weightedPlate_heavy")
@@ -154,35 +154,35 @@ public final class PressurePlates {
     if (Loader.isModLoaded(MINECRAFTBOOM)) {
       final CreativeTabs minecraftBoomTab = creativeTab("minecraftboom_tab");
 
-      registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+      register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
         .setSoundType(SoundType.WOOD)
         .setRegistryName(MINECRAFTBOOM, "spruce_pressure_plate")
         .setTranslationKey(MINECRAFTBOOM + ".spruce_pressure_plate")
         .setCreativeTab(minecraftBoomTab)
         .setHardness(0.5F));
 
-      registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+      register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
         .setSoundType(SoundType.WOOD)
         .setRegistryName(MINECRAFTBOOM, "birch_pressure_plate")
         .setTranslationKey(MINECRAFTBOOM + ".birch_pressure_plate")
         .setCreativeTab(minecraftBoomTab)
         .setHardness(0.5F));
 
-      registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+      register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
         .setSoundType(SoundType.WOOD)
         .setRegistryName(MINECRAFTBOOM, "jungle_pressure_plate")
         .setTranslationKey(MINECRAFTBOOM + ".jungle_pressure_plate")
         .setCreativeTab(minecraftBoomTab)
         .setHardness(0.5F));
 
-      registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+      register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
         .setSoundType(SoundType.WOOD)
         .setRegistryName(MINECRAFTBOOM, "acacia_pressure_plate")
         .setTranslationKey(MINECRAFTBOOM + ".acacia_pressure_plate")
         .setCreativeTab(minecraftBoomTab)
         .setHardness(0.5F));
 
-      registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+      register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
         .setSoundType(SoundType.WOOD)
         .setRegistryName(MINECRAFTBOOM, "dark_oak_pressure_plate")
         .setTranslationKey(MINECRAFTBOOM + ".dark_oak_pressure_plate")
@@ -192,35 +192,35 @@ public final class PressurePlates {
 
     if (Loader.isModLoaded(QUARK)) {
       if (registry.containsKey(new ResourceLocation(QUARK, "spruce_pressure_plate"))) {
-        registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+        register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
           .setSoundType(SoundType.WOOD)
           .setRegistryName(QUARK, "spruce_pressure_plate")
           .setTranslationKey("spruce_pressure_plate")
           .setCreativeTab(CreativeTabs.REDSTONE)
           .setHardness(0.5F));
 
-        registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+        register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
           .setSoundType(SoundType.WOOD)
           .setRegistryName(QUARK, "birch_pressure_plate")
           .setTranslationKey("birch_pressure_plate")
           .setCreativeTab(CreativeTabs.REDSTONE)
           .setHardness(0.5F));
 
-        registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+        register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
           .setSoundType(SoundType.WOOD)
           .setRegistryName(QUARK, "jungle_pressure_plate")
           .setTranslationKey("jungle_pressure_plate")
           .setCreativeTab(CreativeTabs.REDSTONE)
           .setHardness(0.5F));
 
-        registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+        register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
           .setSoundType(SoundType.WOOD)
           .setRegistryName(QUARK, "acacia_pressure_plate")
           .setTranslationKey("acacia_pressure_plate")
           .setCreativeTab(CreativeTabs.REDSTONE)
           .setHardness(0.5F));
 
-        registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+        register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
           .setSoundType(SoundType.WOOD)
           .setRegistryName(QUARK, "dark_oak_pressure_plate")
           .setTranslationKey("dark_oak_pressure_plate")
@@ -229,7 +229,7 @@ public final class PressurePlates {
       }
 
       if (registry.containsKey(new ResourceLocation(QUARK, "obsidian_pressure_plate"))) {
-        registry.register(new DirectionalPressurePlate(Material.ROCK, EntityPlayer.class)
+        register(registry, new DirectionalPressurePlate(Material.ROCK, EntityPlayer.class)
           .setSoundType(SoundType.STONE)
           .setRegistryName(QUARK, "obsidian_pressure_plate")
           .setTranslationKey("obsidian_pressure_plate")
@@ -241,7 +241,7 @@ public final class PressurePlates {
     if (Loader.isModLoaded(THEBETWEENLANDS)) {
       final CreativeTabs theBetweenlandsTab = creativeTab("thebetweenlands.block");
 
-      registry.register(new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
+      register(registry, new DirectionalPressurePlate(Material.WOOD, Sensitivity.EVERYTHING)
         .setSoundType(SoundType.WOOD)
         .setRegistryName(THEBETWEENLANDS, "weedwood_plank_pressure_plate")
         .setTranslationKey(THEBETWEENLANDS + ".weedwood_plank_pressure_plate")
@@ -249,7 +249,7 @@ public final class PressurePlates {
         .setHardness(2.0F)
         .setResistance(5.0F));
 
-      registry.register(new DirectionalPressurePlate(Material.ROCK, Sensitivity.MOBS)
+      register(registry, new DirectionalPressurePlate(Material.ROCK, Sensitivity.MOBS)
         .setSoundType(SoundType.STONE)
         .setRegistryName(THEBETWEENLANDS, "betweenstone_pressure_plate")
         .setTranslationKey(THEBETWEENLANDS + ".betweenstone_pressure_plate")
@@ -257,7 +257,7 @@ public final class PressurePlates {
         .setHardness(1.5F)
         .setResistance(10.0F));
 
-      registry.register(new DirectionalPressurePlate(Material.IRON, EntityPlayer.class)
+      register(registry, new DirectionalPressurePlate(Material.IRON, EntityPlayer.class)
         .setSoundType(SoundType.METAL)
         .setRegistryName(THEBETWEENLANDS, "syrmorite_pressure_plate")
         .setTranslationKey(THEBETWEENLANDS + ".syrmorite_pressure_plate")
@@ -265,6 +265,14 @@ public final class PressurePlates {
         .setHardness(1.5F)
         .setResistance(10.0F));
     }
+  }
+
+  private static void register(final IForgeRegistry<Block> registry, final Block block) {
+    if (!registry.containsKey(block.getRegistryName())) {
+      throw new IllegalArgumentException(String.valueOf(block.getRegistryName()));
+    }
+
+    registry.register(block);
   }
 
   private static CreativeTabs creativeTab(final String label) {
