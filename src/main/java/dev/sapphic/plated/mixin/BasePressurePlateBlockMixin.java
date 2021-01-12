@@ -58,11 +58,12 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
     final Level level = context.getLevel();
     final BlockPos pos = context.getClickedPos();
     final Direction clickedFace = context.getClickedFace();
-    BlockState state = this.defaultBlockState().setValue(FACING, clickedFace);
+    BlockState state = this.defaultBlockState().setValue(FACING, clickedFace)
+      .setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
 
     // Always prefer the clicked face
     if (state.canSurvive(level, pos)) {
-      return this.waterlogged(state, level, pos);
+      return state;
     }
 
     for (final Direction face : FACES) {
@@ -73,7 +74,7 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
       state = state.setValue(FACING, face);
 
       if (state.canSurvive(level, pos)) {
-        return this.waterlogged(state, level, pos);
+        return state;
       }
     }
 
@@ -176,11 +177,6 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
       target = "Lnet/minecraft/core/Direction;UP:Lnet/minecraft/core/Direction;"))
   private Direction getConductiveFace(final BlockState state) {
     return state.getValue(FACING);
-  }
-
-  @Unique
-  private BlockState waterlogged(final BlockState state, final Level level, final BlockPos pos) {
-    return state.setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
   }
 
   /**
