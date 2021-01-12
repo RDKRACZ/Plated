@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
+import org.objectweb.asm.Type;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -83,11 +84,12 @@ public final class PressurePlates {
 
   static {
     final FMLDeobfuscatingRemapper remapper = FMLDeobfuscatingRemapper.INSTANCE;
-    final String owner = remapper.unmap(CreativeTabs.class.getName());
+    final String owner = remapper.unmap(Type.getInternalName(CreativeTabs.class));
     final String fieldName = remapper.mapFieldName(owner, "field_78034_o", null);
 
     try {
       final Field field = CreativeTabs.class.getDeclaredField(fieldName);
+      field.setAccessible(true);
       CREATIVE_TAB_LABEL = MethodHandles.lookup().unreflectGetter(field);
     } catch (final IllegalAccessException | NoSuchFieldException e) {
       throw new IllegalStateException(e);
