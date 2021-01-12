@@ -1,6 +1,6 @@
 {
   "pack": {
-    "pack_format": 3,
-    "description": "@mod.version@"
+    "pack_format": 4,
+    "description": "The default look and feel of Plated"
   }
 }

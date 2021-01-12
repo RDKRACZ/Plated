@@ -1,36 +1,20 @@
-# game
-/run
+# eclipse
+.classpath/
+.metadata/
+.project/
+.settings/
+*.launch
+bin/
+eclipse/
 
-# assets
-/docs
-/icons
-/models
-/sounds
-/sprites
+# idea
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
 
 # gradle
-/.gradle
-/build
-
-# eclipse
-/*.bak
-/*.launch
-/*.swp
-/*.tmp
-/*~.nib
-/.loadpath
-/.metadata
-/.recommenders
-/.settings
-/bin
-/local.properties
-/tmp
-
-/# idea
-/*.iml
-/*.ipr
-/.idea
-/out
-
-# vscode
-/.vscode
+.gradle/
+build/
+run/

@@ -1,0 +1,11 @@
+{
+  "homepage": "https://www.curseforge.com/minecraft/mc-mods/plated",
+  "promos": {
+    "1.12-latest": "1.0.0",
+    "1.12-recommended": "1.0.0"
+  },
+  "1.12": {
+    "0.1.0": "Initial release\nMod support includes Minecraft Boom, Quark, and The Betweenlands",
+    "1.0.0": "Rewrote mod internals\nFixed Quark wooden pressure plate support\nFixed placement and retention logic"
+  }
+}
