@@ -12,7 +12,6 @@ import net.minecraftforge.common.util.Constants.NBT;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 public final class FacingDataBlockEntity extends TileEntity {
-  private static final EnumFacing[] FACINGS = EnumFacing.values();
   private static final String FACING_INDEX = "facing_index";
 
   private @MonotonicNonNull EnumFacing facing;
