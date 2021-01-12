@@ -31,12 +31,15 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Objects;
 
 @EventBusSubscriber
 @Mod(modid = PressurePlates.PLATED, acceptedMinecraftVersions = "[1.12,1.13)", useMetadata = true)
@@ -80,6 +83,7 @@ public final class PressurePlates {
   static final String QUARK = "quark";
   static final String THEBETWEENLANDS = "thebetweenlands";
 
+  private static final Logger LOGGER = LogManager.getLogger();
   private static final MethodHandle CREATIVE_TAB_LABEL;
 
   static {
@@ -268,9 +272,14 @@ public final class PressurePlates {
   }
 
   private static void register(final IForgeRegistry<Block> registry, final Block block) {
-    if (!registry.containsKey(block.getRegistryName())) {
-      throw new IllegalArgumentException(String.valueOf(block.getRegistryName()));
+    final ResourceLocation name = Objects.requireNonNull(block.getRegistryName());
+
+    if (!registry.containsKey(name)) {
+      throw new IllegalArgumentException(name.toString());
     }
+
+    LOGGER.info("The above warning can be ignored, as the override of `{}`"
+      + " is intentional, and not an indication of a broken mod.", name);
 
     registry.register(block);
   }
