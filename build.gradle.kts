@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.sapphic"
-version = "2.0.0"
+version = "2.0.1"
 
 java {
   withSourcesJar()
@@ -18,6 +18,14 @@ minecraft {
   refmapName = "mixins/plated/refmap.json"
 }
 
+repositories {
+  maven("https://cursemaven.com") {
+    content {
+      includeGroup("curse.maven")
+    }
+  }
+}
+
 dependencies {
   minecraft("com.mojang:minecraft:1.16.4")
   mappings(minecraft.officialMojangMappings())
@@ -25,6 +33,10 @@ dependencies {
   implementation("com.google.code.findbugs:jsr305:3.0.2")
   implementation("org.jetbrains:annotations:20.1.0")
   implementation("org.checkerframework:checker-qual:3.8.0")
+
+  modImplementation("curse.maven:red-bits-403914:3157729") {
+    isTransitive = false
+  }
 }
 
 tasks {

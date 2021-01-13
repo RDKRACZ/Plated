@@ -6,7 +6,8 @@
   "mixins": [
     "BasePressurePlateBlockMixin",
     "PressurePlateBlockMixin",
-    "WeightedPressurePlateBlockMixin"
+    "WeightedPressurePlateBlockMixin",
+    "redbits.ComplexPressurePlateBlockMixin"
   ],
   "refmap": "mixins/plated/refmap.json"
 }
