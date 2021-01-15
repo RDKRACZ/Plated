@@ -34,7 +34,7 @@ dependencies {
   implementation("org.jetbrains:annotations:20.1.0")
   implementation("org.checkerframework:checker-qual:3.8.0")
 
-  modImplementation("curse.maven:red-bits-403914:3157729") {
+  modCompileOnly("curse.maven:red-bits-403914:3157729") {
     isTransitive = false
   }
 }
