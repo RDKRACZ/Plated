@@ -1,4 +1,5 @@
 import net.minecraftforge.gradle.common.task.SignJar
+import net.minecraftforge.gradle.common.util.RunConfig
 import org.gradle.util.GradleVersion
 import java.time.Instant
 
@@ -20,34 +21,28 @@ val mixinRefmap: String = "mixins/plated/refmap.json"
 val mixinConfigs: List<String> = listOf("client", "server").map {
   "mixins/plated/mixins.$it.json"
 }
-val mixinProperties: Map<String, Boolean> = mapOf(
-  "mixin.env.disableRefMap" to true,
-  "mixin.debug.export" to true,
-  "mixin.debug.export.decompile" to false,
-  "mixin.debug.verbose" to true,
-  "mixin.debug.dumpTargetOnFailure" to true,
-  "mixin.checks" to true,
-  "mixin.hotSwap" to true
-)
 
 minecraft {
   mappings("snapshot", "20201028-1.16.3")
   runs {
-    create("client") {
+    fun RunConfig.configured() {
       workingDirectory = file("run").canonicalPath
       mods.create("plated").source(sourceSets["main"])
       mixinConfigs.forEach { arg("-mixin.config=$it") }
-      property("forge.logging.console.level", "debug")
-      mixinProperties.forEach { (k, v) -> property(k, "$v") }
+      mapOf(
+        "forge.logging.console.level" to "debug",
+        "mixin.env.disableRefMap" to true,
+        "mixin.debug.export" to true,
+        "mixin.debug.export.decompile" to false,
+        "mixin.debug.verbose" to true,
+        "mixin.debug.dumpTargetOnFailure" to true,
+        "mixin.checks" to true,
+        "mixin.hotSwap" to true
+      ).forEach { (k, v) -> property(k, "$v") }
     }
 
-    create("server") {
-      workingDirectory = file("run").canonicalPath
-      mods.create("plated").source(sourceSets["main"])
-      mixinConfigs.forEach { arg("-mixin.config=$it") }
-      property("forge.logging.console.level", "debug")
-      mixinProperties.forEach { (k, v) -> property(k, "$v") }
-    }
+    create("client").configured()
+    create("server").configured()
   }
 }
 
