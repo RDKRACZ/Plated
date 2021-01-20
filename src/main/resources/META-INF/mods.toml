@@ -22,3 +22,9 @@ modId = "forge"
 mandatory = true
 versionRange = "[36.0.1,)"
 side = "BOTH"
+
+[[dependencies.plated]]
+modId = "quark"
+mandatory = false
+versionRange = "[r2.4-296,)"
+side = "BOTH"
