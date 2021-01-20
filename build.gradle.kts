@@ -66,8 +66,10 @@ repositories {
 dependencies {
   minecraft("net.minecraftforge:forge:1.16.5-36.0.1")
   implementation("org.checkerframework:checker-qual:3.9.0")
-  compileOnly(fg.deobf("curse.maven:autoreglib-250363:3128555"))
-  compileOnly(fg.deobf("curse.maven:quark-243121:3168455"))
+  implementation(fg.deobf("curse.maven:mantle-74924:3170850"))
+  implementation(fg.deobf("curse.maven:inspirations-284007:3170862"))
+  implementation(fg.deobf("curse.maven:autoreglib-250363:3128555"))
+  implementation(fg.deobf("curse.maven:quark-243121:3168455"))
   annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
 }
 

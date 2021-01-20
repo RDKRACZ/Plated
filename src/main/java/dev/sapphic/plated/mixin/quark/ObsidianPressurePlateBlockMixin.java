@@ -5,6 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import vazkii.quark.content.automation.block.ObsidianPressurePlateBlock;
@@ -14,6 +15,7 @@ import static dev.sapphic.plated.PressurePlates.TOUCH_AABBS;
 
 // TODO Superclass hierarchy
 
+@Pseudo
 @Mixin(ObsidianPressurePlateBlock.class)
 abstract class ObsidianPressurePlateBlockMixin {
   @Redirect(

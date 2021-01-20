@@ -7,6 +7,8 @@
     "BasePressurePlateBlockMixin",
     "PressurePlateBlockMixin",
     "WeightedPressurePlateBlockMixin",
+    "inspirations.CarpetedPressurePlateBlockMixin",
+    "inspirations.PressurePlateCarpetingMixin",
     "quark.ObsidianPressurePlateBlockMixin"
   ],
   "refmap": "mixins/plated/refmap.json"
