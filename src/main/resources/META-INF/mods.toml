@@ -1,0 +1,24 @@
+modLoader = "javafml"
+loaderVersion = "[36.0,)"
+license = "Apache-2.0"
+issueTrackerURL = "https://git.io/JLPm5"
+
+[[mods]]
+modId = "plated"
+version = "${file.jarVersion}"
+displayName = "Plated"
+authors = "Chloe Dawn"
+description = '''Allows placement of pressure plates on any solid face of a block'''
+displayURL = "https://git.io/JLPmd"
+
+[[dependencies.plated]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.5,)"
+side = "BOTH"
+
+[[dependencies.plated]]
+modId = "forge"
+mandatory = true
+versionRange = "[36.0.1,)"
+side = "BOTH"

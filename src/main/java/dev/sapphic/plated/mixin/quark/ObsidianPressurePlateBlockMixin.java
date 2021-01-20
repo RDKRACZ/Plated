@@ -1,25 +1,7 @@
-/*
- * Copyright 2021 Chloe Dawn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+package dev.sapphic.plated.mixin.quark;
 
-package dev.sapphic.plated.mixin;
-
-import net.minecraft.block.AbstractPressurePlateBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -32,22 +14,21 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import vazkii.quark.content.automation.block.ObsidianPressurePlateBlock;
 
 import static dev.sapphic.plated.PressurePlates.FACING;
 import static dev.sapphic.plated.PressurePlates.TOUCH_AABBS;
 import static dev.sapphic.plated.PressurePlates.WATERLOGGED;
 
-@Mixin(PressurePlateBlock.class)
-abstract class PressurePlateBlockMixin extends AbstractPressurePlateBlock {
-  PressurePlateBlockMixin(final Properties properties) {
-    super(properties);
-  }
+// TODO https://github.com/Vazkii/Quark/pull/2905
 
+@Mixin(ObsidianPressurePlateBlock.class)
+abstract class ObsidianPressurePlateBlockMixin {
   @ModifyArg(
-    method = "<init>(Lnet/minecraft/block/PressurePlateBlock$Sensitivity;Lnet/minecraft/block/AbstractBlock$Properties;)V",
+    method = "<init>(Ljava/lang/String;Lvazkii/quark/base/module/QuarkModule;Lnet/minecraft/item/ItemGroup;Lnet/minecraft/block/AbstractBlock$Properties;)V",
     require = 1, allow = 1,
     at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL,
-      target = "Lnet/minecraft/block/PressurePlateBlock;setDefaultState(Lnet/minecraft/block/BlockState;)V"))
+      target = "Lvazkii/quark/content/automation/block/ObsidianPressurePlateBlock;setDefaultState(Lnet/minecraft/block/BlockState;)V"))
   private BlockState setDefaultFacing(final BlockState state) {
     return state.with(FACING, Direction.UP).with(WATERLOGGED, false);
   }
@@ -56,7 +37,7 @@ abstract class PressurePlateBlockMixin extends AbstractPressurePlateBlock {
     method = "computeRedstoneStrength(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)I",
     require = 1, allow = 1,
     at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-      target = "Lnet/minecraft/block/PressurePlateBlock;PRESSURE_AABB:Lnet/minecraft/util/math/AxisAlignedBB;"))
+      target = "Lvazkii/quark/content/automation/block/ObsidianPressurePlateBlock;PRESSURE_AABB:Lnet/minecraft/util/math/AxisAlignedBB;"))
   private AxisAlignedBB getTouchAABB(final World world, final BlockPos pos) {
     return TOUCH_AABBS.get(world.getBlockState(pos).get(FACING));
   }

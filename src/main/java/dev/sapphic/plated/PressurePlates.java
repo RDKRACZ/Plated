@@ -18,17 +18,20 @@ package dev.sapphic.plated;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.Block;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Reference constants used by pressure plate mixins
  */
+@Mod("plated")
 public final class PressurePlates {
   /**
    * The property that represents the new facing direction of pressure plates
@@ -46,12 +49,12 @@ public final class PressurePlates {
    */
   public static final ImmutableMap<Direction, VoxelShape> AABBS =
     Maps.immutableEnumMap(ImmutableMap.<Direction, VoxelShape>builder()
-      .put(Direction.DOWN, Block.box(1.0, 15.0, 1.0, 15.0, 16.0, 15.0))
-      .put(Direction.UP, Block.box(1.0, 0.0, 1.0, 15.0, 1.0, 15.0))
-      .put(Direction.NORTH, Block.box(1.0, 1.0, 15.0, 15.0, 15.0, 16.0))
-      .put(Direction.SOUTH, Block.box(1.0, 1.0, 0.0, 15.0, 15.0, 1.0))
-      .put(Direction.WEST, Block.box(15.0, 1.0, 1.0, 16.0, 15.0, 15.0))
-      .put(Direction.EAST, Block.box(0.0, 1.0, 1.0, 1.0, 15.0, 15.0))
+      .put(Direction.DOWN, Block.makeCuboidShape(1.0, 15.0, 1.0, 15.0, 16.0, 15.0))
+      .put(Direction.UP, Block.makeCuboidShape(1.0, 0.0, 1.0, 15.0, 1.0, 15.0))
+      .put(Direction.NORTH, Block.makeCuboidShape(1.0, 1.0, 15.0, 15.0, 15.0, 16.0))
+      .put(Direction.SOUTH, Block.makeCuboidShape(1.0, 1.0, 0.0, 15.0, 15.0, 1.0))
+      .put(Direction.WEST, Block.makeCuboidShape(15.0, 1.0, 1.0, 16.0, 15.0, 15.0))
+      .put(Direction.EAST, Block.makeCuboidShape(0.0, 1.0, 1.0, 1.0, 15.0, 15.0))
       .build());
 
   /**
@@ -60,28 +63,25 @@ public final class PressurePlates {
    */
   public static final ImmutableMap<Direction, VoxelShape> PRESSED_AABBS =
     Maps.immutableEnumMap(ImmutableMap.<Direction, VoxelShape>builder()
-      .put(Direction.DOWN, Block.box(1.0, 15.5, 1.0, 15.0, 16.0, 15.0))
-      .put(Direction.UP, Block.box(1.0, 0.0, 1.0, 15.0, 0.5, 15.0))
-      .put(Direction.NORTH, Block.box(1.0, 1.0, 15.5, 15.0, 15.0, 16.0))
-      .put(Direction.SOUTH, Block.box(1.0, 1.0, 0.0, 15.0, 15.0, 0.5))
-      .put(Direction.WEST, Block.box(15.5, 1.0, 1.0, 16.0, 15.0, 15.0))
-      .put(Direction.EAST, Block.box(0.0, 1.0, 1.0, 0.5, 15.0, 15.0))
+      .put(Direction.DOWN, Block.makeCuboidShape(1.0, 15.5, 1.0, 15.0, 16.0, 15.0))
+      .put(Direction.UP, Block.makeCuboidShape(1.0, 0.0, 1.0, 15.0, 0.5, 15.0))
+      .put(Direction.NORTH, Block.makeCuboidShape(1.0, 1.0, 15.5, 15.0, 15.0, 16.0))
+      .put(Direction.SOUTH, Block.makeCuboidShape(1.0, 1.0, 0.0, 15.0, 15.0, 0.5))
+      .put(Direction.WEST, Block.makeCuboidShape(15.5, 1.0, 1.0, 16.0, 15.0, 15.0))
+      .put(Direction.EAST, Block.makeCuboidShape(0.0, 1.0, 1.0, 0.5, 15.0, 15.0))
       .build());
 
   /**
-   * A collection of {@link AABB} bounding boxes that represent
+   * A collection of {@link AxisAlignedBB} bounding boxes that represent
    * each orientation of a pressure plate's intersection bounds
    */
-  public static final ImmutableMap<Direction, AABB> TOUCH_AABBS =
-    Maps.immutableEnumMap(ImmutableMap.<Direction, AABB>builder()
-      .put(Direction.DOWN, new AABB(0.125, 0.75, 0.125, 0.875, 1.0, 0.875))
-      .put(Direction.UP, new AABB(0.125, 0.0, 0.125, 0.875, 0.25, 0.875))
-      .put(Direction.NORTH, new AABB(0.125, 0.125, 0.75, 0.875, 0.875, 1.0))
-      .put(Direction.SOUTH, new AABB(0.125, 0.125, 0.0, 0.875, 0.875, 0.25))
-      .put(Direction.WEST, new AABB(0.75, 0.125, 0.125, 1.0, 0.875, 0.875))
-      .put(Direction.EAST, new AABB(0.0, 0.125, 0.125, 0.25, 0.875, 0.875))
+  public static final ImmutableMap<Direction, AxisAlignedBB> TOUCH_AABBS =
+    Maps.immutableEnumMap(ImmutableMap.<Direction, AxisAlignedBB>builder()
+      .put(Direction.DOWN, new AxisAlignedBB(0.125, 0.75, 0.125, 0.875, 1.0, 0.875))
+      .put(Direction.UP, new AxisAlignedBB(0.125, 0.0, 0.125, 0.875, 0.25, 0.875))
+      .put(Direction.NORTH, new AxisAlignedBB(0.125, 0.125, 0.75, 0.875, 0.875, 1.0))
+      .put(Direction.SOUTH, new AxisAlignedBB(0.125, 0.125, 0.0, 0.875, 0.875, 0.25))
+      .put(Direction.WEST, new AxisAlignedBB(0.75, 0.125, 0.125, 1.0, 0.875, 0.875))
+      .put(Direction.EAST, new AxisAlignedBB(0.0, 0.125, 0.125, 0.25, 0.875, 0.875))
       .build());
-
-  private PressurePlates() {
-  }
 }

@@ -16,20 +16,20 @@
 
 package dev.sapphic.plated.mixin;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BasePressurePlateBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.AbstractPressurePlateBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -44,8 +44,8 @@ import static dev.sapphic.plated.PressurePlates.FACING;
 import static dev.sapphic.plated.PressurePlates.PRESSED_AABBS;
 import static dev.sapphic.plated.PressurePlates.WATERLOGGED;
 
-@Mixin(BasePressurePlateBlock.class)
-abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterloggedBlock {
+@Mixin(AbstractPressurePlateBlock.class)
+abstract class BasePressurePlateBlockMixin extends Block implements IWaterLoggable {
   @Unique(silent = true)
   private static final Direction[] FACES = Direction.values();
 
@@ -54,15 +54,15 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
   }
 
   @Override
-  public @Nullable BlockState getStateForPlacement(final BlockPlaceContext context) {
-    final Level level = context.getLevel();
-    final BlockPos pos = context.getClickedPos();
-    final Direction clickedFace = context.getClickedFace();
-    BlockState state = this.defaultBlockState().setValue(FACING, clickedFace)
-      .setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
+  public @Nullable BlockState getStateForPlacement(final BlockItemUseContext context) {
+    final World level = context.getWorld();
+    final BlockPos pos = context.getPos();
+    final Direction clickedFace = context.getFace();
+    BlockState state = this.getDefaultState().with(FACING, clickedFace)
+      .with(WATERLOGGED, level.getFluidState(pos).getFluid() == Fluids.WATER);
 
     // Always prefer the clicked face
-    if (state.canSurvive(level, pos)) {
+    if (state.isValidPosition(level, pos)) {
       return state;
     }
 
@@ -71,9 +71,9 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
         continue;
       }
 
-      state = state.setValue(FACING, face);
+      state = state.with(FACING, face);
 
-      if (state.canSurvive(level, pos)) {
+      if (state.isValidPosition(level, pos)) {
         return state;
       }
     }
@@ -84,99 +84,99 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
   @Override
   @Deprecated
   public FluidState getFluidState(final BlockState state) {
-    return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
   }
 
   @Override
   @Deprecated
   public BlockState rotate(final BlockState state, final Rotation rotation) {
-    return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    return state.with(FACING, rotation.rotate(state.get(FACING)));
   }
 
   @Override
   @Deprecated
   public BlockState mirror(final BlockState state, final Mirror mirror) {
-    return state.rotate(mirror.getRotation(state.getValue(FACING)));
+    return state.rotate(mirror.toRotation(state.get(FACING)));
   }
 
   @Redirect(
-    method = "getShape(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+    method = "getShape(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/shapes/ISelectionContext;)Lnet/minecraft/util/math/shapes/VoxelShape;",
     require = 1, allow = 1,
     at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-      target = "Lnet/minecraft/world/level/block/BasePressurePlateBlock;PRESSED_AABB:Lnet/minecraft/world/phys/shapes/VoxelShape;"))
+      target = "Lnet/minecraft/block/AbstractPressurePlateBlock;PRESSED_AABB:Lnet/minecraft/util/math/shapes/VoxelShape;"))
   private VoxelShape getPressedDirectionalShape(final BlockState state) {
-    return PRESSED_AABBS.get(state.getValue(FACING));
+    return PRESSED_AABBS.get(state.get(FACING));
   }
 
   @Redirect(
-    method = "getShape(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+    method = "getShape(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/shapes/ISelectionContext;)Lnet/minecraft/util/math/shapes/VoxelShape;",
     require = 1, allow = 1,
     at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-      target = "Lnet/minecraft/world/level/block/BasePressurePlateBlock;AABB:Lnet/minecraft/world/phys/shapes/VoxelShape;"))
+      target = "Lnet/minecraft/block/AbstractPressurePlateBlock;UNPRESSED_AABB:Lnet/minecraft/util/math/shapes/VoxelShape;"))
   private VoxelShape getDirectionalShape(final BlockState state) {
-    return AABBS.get(state.getValue(FACING));
+    return AABBS.get(state.get(FACING));
   }
 
   @Inject(
-    method = "updateShape(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+    method = "updatePostPlacement(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/Direction;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;",
     at = @At("HEAD"))
-  private void updateFluidState(final BlockState state, final Direction side, final BlockState neighbor, final LevelAccessor level, final BlockPos pos, final BlockPos offset, final CallbackInfoReturnable<BlockState> ci) {
-    if (state.getValue(WATERLOGGED)) {
-      level.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+  private void updateFluidState(final BlockState state, final Direction side, final BlockState neighbor, final IWorld world, final BlockPos pos, final BlockPos offset, final CallbackInfoReturnable<BlockState> ci) {
+    if (state.get(WATERLOGGED)) {
+      world.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
     }
   }
 
   @Redirect(
-    method = "updateShape(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+    method = "updatePostPlacement(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/Direction;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;",
     require = 1, allow = 1,
     at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-      target = "Lnet/minecraft/core/Direction;DOWN:Lnet/minecraft/core/Direction;"))
+      target = "Lnet/minecraft/util/Direction;DOWN:Lnet/minecraft/util/Direction;"))
   private Direction getNeighborFace(final BlockState state) {
-    return state.getValue(FACING).getOpposite();
+    return state.get(FACING).getOpposite();
   }
 
   @Redirect(
-    method = "canSurvive(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z",
+    method = "isValidPosition(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IWorldReader;Lnet/minecraft/util/math/BlockPos;)Z",
     require = 1, allow = 1,
     at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL,
-      target = "Lnet/minecraft/core/BlockPos;below()Lnet/minecraft/core/BlockPos;"))
+      target = "Lnet/minecraft/util/math/BlockPos;down()Lnet/minecraft/util/math/BlockPos;"))
   private BlockPos getSurfacePos(final BlockPos pos, final BlockState state) {
-    return pos.relative(state.getValue(FACING).getOpposite());
+    return pos.offset(state.get(FACING).getOpposite());
   }
 
   @Redirect(
-    method = "canSurvive(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z",
+    method = "isValidPosition(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IWorldReader;Lnet/minecraft/util/math/BlockPos;)Z",
     require = 1, allow = 1,
     at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-      target = "Lnet/minecraft/core/Direction;UP:Lnet/minecraft/core/Direction;"))
+      target = "Lnet/minecraft/util/Direction;UP:Lnet/minecraft/util/Direction;"))
   private Direction getSurvivableFace(final BlockState state) {
-    return state.getValue(FACING);
+    return state.get(FACING);
   }
 
   @Redirect(
-    method = "checkPressed(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)V",
+    method = "updateState(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)V",
     at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL,
-      target = "Lnet/minecraft/world/level/block/BasePressurePlateBlock;updateNeighbours(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"))
-  private void updateNeighbors116(final BasePressurePlateBlock block, final Level level, final BlockPos pos, final Level level1, final BlockPos pos1, final BlockState state) {
+      target = "Lnet/minecraft/block/AbstractPressurePlateBlock;updateNeighbors(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
+  private void updateNeighbors(final AbstractPressurePlateBlock block, final World level, final BlockPos pos, final World level1, final BlockPos pos1, final BlockState state) {
     this.updateNeighbors(state, level, pos);
   }
 
   @Redirect(
-    method = "onRemove(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V",
+    method = "onReplaced(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)V",
     require = 1, allow = 1,
     at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL,
-      target = "Lnet/minecraft/world/level/block/BasePressurePlateBlock;updateNeighbours(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"))
-  private void updateNeighbors(final BasePressurePlateBlock block, final Level level, final BlockPos pos, final BlockState state) {
+      target = "Lnet/minecraft/block/AbstractPressurePlateBlock;updateNeighbors(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
+  private void updateNeighbors(final AbstractPressurePlateBlock block, final World level, final BlockPos pos, final BlockState state) {
     this.updateNeighbors(state, level, pos);
   }
 
   @Redirect(
-    method = "getDirectSignal(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)I",
+    method = "getStrongPower(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;)I",
     require = 1, allow = 1,
     at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-      target = "Lnet/minecraft/core/Direction;UP:Lnet/minecraft/core/Direction;"))
+      target = "Lnet/minecraft/util/Direction;UP:Lnet/minecraft/util/Direction;"))
   private Direction getConductiveFace(final BlockState state) {
-    return state.getValue(FACING);
+    return state.get(FACING);
   }
 
   /**
@@ -191,8 +191,8 @@ abstract class BasePressurePlateBlockMixin extends Block implements SimpleWaterl
    * @param pos   The origin position
    */
   @Unique
-  private void updateNeighbors(final BlockState state, final Level level, final BlockPos pos) {
-    level.updateNeighborsAt(pos, this);
-    level.updateNeighborsAt(pos.relative(state.getValue(FACING).getOpposite()), this);
+  private void updateNeighbors(final BlockState state, final World level, final BlockPos pos) {
+    level.notifyNeighborsOfStateChange(pos, this);
+    level.notifyNeighborsOfStateChange(pos.offset(state.get(FACING).getOpposite()), this);
   }
 }

@@ -7,7 +7,7 @@
     "BasePressurePlateBlockMixin",
     "PressurePlateBlockMixin",
     "WeightedPressurePlateBlockMixin",
-    "redbits.ComplexPressurePlateBlockMixin"
+    "quark.ObsidianPressurePlateBlockMixin"
   ],
   "refmap": "mixins/plated/refmap.json"
 }
