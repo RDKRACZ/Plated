@@ -138,3 +138,9 @@ tasks {
 signing {
   sign(configurations.archives.get())
 }
+
+if (System.getProperty("idea.sync.active") == "true") {
+  afterEvaluate { // https://git.io/JtmQB
+    tasks.compileJava.get().options.annotationProcessorPath = files()
+  }
+}
