@@ -108,7 +108,7 @@ tasks {
       "Specification-Version" to "1.0.0",
       "Specification-Vendor" to project.group,
 
-      "MixinConfigs" to mixinConfigs.joinToString(" ")
+      "MixinConfigs" to mixinConfigs.joinToString()
     )
 
     finalizedBy("reobfJar")
