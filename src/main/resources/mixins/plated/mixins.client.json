@@ -6,5 +6,5 @@
   "client": [
     "ModelBakeryMixin"
   ],
-  "refmap": "mixins/plated/refmap.json"
+  "refmap": "$refmap"
 }

@@ -17,7 +17,8 @@ java {
   sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
-val mixinRefmap: String = "mixins/plated/refmap.json"
+// FIXME https://github.com/SpongePowered/Mixin/issues/463
+val mixinRefmap: String = "refmap.plated.json"
 val mixinConfigs: List<String> = listOf("client", "server").map {
   "mixins/plated/mixins.$it.json"
 }
@@ -76,11 +77,6 @@ tasks {
       encoding = "UTF-8"
       compilerArgs.addAll(listOf("-Xlint:all", "-parameters"))
     }
-
-    doLast {
-      // FIXME https://github.com/SpongePowered/Mixin/issues/463
-      buildDir.resolve("tmp/compileJava/$mixinRefmap").parentFile.mkdirs()
-    }
   }
 
   jar {
@@ -114,6 +110,12 @@ tasks {
     finalizedBy("reobfJar")
   }
 
+  processResources {
+    filesMatching(mixinConfigs) {
+      expand("refmap" to mixinRefmap)
+    }
+  }
+
   create<SignJar>("signJar") {
     dependsOn("reobfJar")
 
@@ -134,8 +136,3 @@ signing {
   sign(configurations.archives.get())
 }
 
-if (System.getProperty("idea.sync.active") == "true") {
-  afterEvaluate { // https://git.io/JtmQB
-    tasks.compileJava.get().options.annotationProcessorPath = files()
-  }
-}

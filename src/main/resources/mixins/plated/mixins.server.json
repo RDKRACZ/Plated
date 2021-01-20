@@ -11,5 +11,5 @@
     "inspirations.PressurePlateCarpetingMixin",
     "quark.ObsidianPressurePlateBlockMixin"
   ],
-  "refmap": "mixins/plated/refmap.json"
+  "refmap": "$refmap"
 }
