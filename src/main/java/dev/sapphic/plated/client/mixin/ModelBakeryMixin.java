@@ -84,7 +84,7 @@ abstract class ModelBakeryMixin {
   @SuppressWarnings("UnresolvedMixinReference") // IDE plugin cannot resolve synthetic targets
   @ModifyVariable(
     method = "lambda$loadBlockstate$17(Lnet/minecraft/resources/IResource;)Lcom/mojang/datafixers/util/Pair;",
-    require = 1, allow = 1,
+    require = 1, allow = 1, remap = false,
     at = @At("RETURN"))
   private Pair<String, BlockModelDefinition> applyPressurePlateRotation(final Pair<String, BlockModelDefinition> pair, final IResource resource) {
     if (ForgeRegistries.BLOCKS.getValue(resolve(resource.getLocation())) instanceof AbstractPressurePlateBlock) {

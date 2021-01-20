@@ -26,7 +26,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
 
 /**
  * Reference constants used by pressure plate mixins

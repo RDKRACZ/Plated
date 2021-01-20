@@ -68,6 +68,7 @@ dependencies {
   implementation("org.checkerframework:checker-qual:3.9.0")
   compileOnly(fg.deobf("curse.maven:autoreglib-250363:3128555"))
   compileOnly(fg.deobf("curse.maven:quark-243121:3168455"))
+  annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
 }
 
 tasks {
@@ -77,6 +78,11 @@ tasks {
       isDeprecation = true
       encoding = "UTF-8"
       compilerArgs.addAll(listOf("-Xlint:all", "-parameters"))
+    }
+
+    doLast {
+      // FIXME https://github.com/SpongePowered/Mixin/issues/463
+      buildDir.resolve("tmp/compileJava/$mixinRefmap").parentFile.mkdirs()
     }
   }
 
