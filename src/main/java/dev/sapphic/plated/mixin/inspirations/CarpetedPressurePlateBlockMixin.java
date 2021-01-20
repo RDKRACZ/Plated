@@ -85,7 +85,7 @@ abstract class CarpetedPressurePlateBlockMixin extends PressurePlateBlock {
   @Redirect(
     method = "getShape(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/shapes/ISelectionContext;)Lnet/minecraft/util/math/shapes/VoxelShape;",
     require = 1, allow = 1,
-    at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
+    at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, remap = false, // Mixin remaps to superclass because target is shadowing members
       target = "Lknightminer/inspirations/utility/block/CarpetedPressurePlateBlock;PRESSED_AABB:Lnet/minecraft/util/math/shapes/VoxelShape;"))
   private VoxelShape getPressedDirectionalShape(final BlockState state) {
     return PRESSED_CARPETED_AABBS.get(state.get(FACING));
@@ -94,7 +94,7 @@ abstract class CarpetedPressurePlateBlockMixin extends PressurePlateBlock {
   @Redirect(
     method = "getShape(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/shapes/ISelectionContext;)Lnet/minecraft/util/math/shapes/VoxelShape;",
     require = 1, allow = 1,
-    at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
+    at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, remap = false, // Mixin remaps to superclass because target is shadowing members
       target = "Lknightminer/inspirations/utility/block/CarpetedPressurePlateBlock;UNPRESSED_AABB:Lnet/minecraft/util/math/shapes/VoxelShape;"))
   private VoxelShape getDirectionalShape(final BlockState state) {
     return CARPETED_AABBS.get(state.get(FACING));
