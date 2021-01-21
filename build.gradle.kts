@@ -48,9 +48,16 @@ mixin {
 }
 
 repositories {
-  maven("https://cursemaven.com") {
+  maven("https://dvs1.progwml6.com/files/maven") {
     content {
-      includeGroup("curse.maven")
+      includeGroup("slimeknights.mantle")
+      includeGroup("knightminer")
+    }
+  }
+  maven("https://maven.blamejared.com") {
+    content {
+      includeGroup("vazkii.autoreglib")
+      includeGroup("vazkii.quark")
     }
   }
 }
@@ -58,10 +65,10 @@ repositories {
 dependencies {
   minecraft("net.minecraftforge:forge:1.16.5-36.0.1")
   implementation("org.checkerframework:checker-qual:3.9.0")
-  implementation(fg.deobf("curse.maven:mantle-74924:3170850"))
-  implementation(fg.deobf("curse.maven:inspirations-284007:3170862"))
-  implementation(fg.deobf("curse.maven:autoreglib-250363:3128555"))
-  implementation(fg.deobf("curse.maven:quark-243121:3168455"))
+  implementation(fg.deobf("slimeknights.mantle:Mantle:1.16.5-1.6.75"))
+  implementation(fg.deobf("knightminer:Inspirations:1.16.5-1.2.2.27"))
+  implementation(fg.deobf("vazkii.autoreglib:AutoRegLib:1.6-48.88"))
+  implementation(fg.deobf("vazkii.quark:Quark:r2.4-296.1647"))
   annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
 }
 
