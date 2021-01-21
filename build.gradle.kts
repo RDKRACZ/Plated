@@ -4,7 +4,7 @@ import org.gradle.util.GradleVersion
 import java.time.Instant
 
 plugins {
-  id("net.minecraftforge.gradle") version "3.0.190"
+  id("net.minecraftforge.gradle") version "4.0.8"
   id("org.spongepowered.mixin") version "0.7-SNAPSHOT"
   id("net.nemerosa.versioning") version "2.6.1"
   id("signing")
@@ -12,10 +12,6 @@ plugins {
 
 group = "dev.sapphic"
 version = "2.0.0"
-
-java {
-  sourceCompatibility = JavaVersion.VERSION_1_8
-}
 
 // FIXME https://github.com/SpongePowered/Mixin/issues/463
 val mixinRefmap: String = "refmap.plated.json"
@@ -72,6 +68,7 @@ dependencies {
 tasks {
   compileJava {
     with(options) {
+      release.set(8)
       isFork = true
       isDeprecation = true
       encoding = "UTF-8"
